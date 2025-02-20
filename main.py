@@ -137,24 +137,24 @@ async def emojistats(interaction: discord.Interaction, range: Union[str, None] =
     await interaction.response.send_message(message)
 
 
-@bot.tree.command(
-    name="clear-emojistats", description="サーバ絵文字の使用回数をリセットします"
-)
-async def clear_emoji_stats(interaction: discord.Interaction):
-    if interaction.guild_id is None:
-        await interaction.response.send_message(
-            "エラー: コマンドが使用されたサーバが不明"
-        )
-        logger.error("エラー: コマンドが使用されたサーバが不明")
-        return
+# @bot.tree.command(
+#     name="clear-emojistats", description="サーバ絵文字の使用回数をリセットします"
+# )
+# async def clear_emoji_stats(interaction: discord.Interaction):
+#     if interaction.guild_id is None:
+#         await interaction.response.send_message(
+#             "エラー: コマンドが使用されたサーバが不明"
+#         )
+#         logger.error("エラー: コマンドが使用されたサーバが不明")
+#         return
 
-    server_exists = interaction.guild_id in emoji_counts
-    if (not server_exists) or (not emoji_counts[interaction.guild_id]):
-        await interaction.response.send_message("まだ絵文字が使われていません")
-        return
+#     server_exists = interaction.guild_id in emoji_counts
+#     if (not server_exists) or (not emoji_counts[interaction.guild_id]):
+#         await interaction.response.send_message("まだ絵文字が使われていません")
+#         return
 
-    emoji_counts.clear()
-    await interaction.response.send_message("絵文字の使用回数をリセットしました．")
+#     emoji_counts.clear()
+#     await interaction.response.send_message("絵文字の使用回数をリセットしました．")
 
 
 if TOKEN:
