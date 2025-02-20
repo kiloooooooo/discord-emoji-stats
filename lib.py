@@ -47,3 +47,39 @@ def _load_emoji_counts_from_csv(filename):
     except Exception as e:
         print(f"エラー: CSVファイルからの読み込みに失敗しました。エラー内容: {e}")
         return collections.Counter()
+
+
+def get_top_n_range(counter, start_rank, end_rank):
+    """
+    collections.Counterオブジェクトから指定した順位範囲の要素を抽出する関数
+
+    Args:
+        counter (collections.Counter): 集計結果のCounterオブジェクト
+        start_rank (int): 抽出を開始する順位（1始まり）
+        end_rank (int): 抽出を終了する順位（含む）
+
+    Returns:
+        list: 指定した順位範囲の(要素, カウント)のタプルのリスト
+    """
+    if start_rank is None:
+        start_rank = 1
+
+    if end_rank is None:
+        end_rank = len(counter) + 1
+
+    if start_rank <= 0 or end_rank <= 0 or start_rank > end_rank:
+        return []  # 無効な順位範囲の場合は空のリストを返す
+
+    sorted_items = counter.most_common()
+    if not sorted_items:
+        return []  # Counterが空の場合も空のリストを返す。
+
+    # 順位をリストのインデックスに変換（0始まり）
+    start_index = start_rank - 1
+    end_index = end_rank
+
+    # リストの範囲を超えないように調整
+    start_index = max(0, start_index)
+    end_index = min(len(sorted_items), end_index)
+
+    return sorted_items[start_index:end_index]
