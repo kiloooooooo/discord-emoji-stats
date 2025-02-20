@@ -1,5 +1,6 @@
 import collections
 import csv
+import glob
 
 
 def export_emoji_counts_to_csv(emoji_counts, filename="emoji_counts.csv"):
@@ -17,7 +18,15 @@ def export_emoji_counts_to_csv(emoji_counts, filename="emoji_counts.csv"):
         print(f"エラー: CSVファイルへの書き出しに失敗しました。エラー内容: {e}")
 
 
-def load_emoji_counts_from_csv(filename):
+def load_emoji_counts_from_csv():
+    emoji_counts = {}
+    for filename in glob.glob("*.csv"):
+        server_id = filename.split(".")[1]
+        emoji_counts[int(server_id)] = _load_emoji_counts_from_csv(filename)
+    return emoji_counts
+
+
+def _load_emoji_counts_from_csv(filename):
     """
     CSVファイルからemoji_countsを読み込む関数
     """
